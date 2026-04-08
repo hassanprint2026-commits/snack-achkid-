@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snack Achkid - سناك أشيد مراكش</title>body {
+    font-family: 'Tajawal', sans-serif;
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #f97316;
+    border-radius: 10px;
+}
+[x-cloak] { display: none !important; }
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN for Interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->function snackApp() {
+    return {
+        currentHero: 0,
+        selectedCategory: null,
+        heroImages: [
+            "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2070&auto=format&fit=crop"
+        ],
+        contactInfo: {
+            phone: "06 68 70 66 31",
+            whatsapp: "212668706631",
+            hours: "مفتوح · يغلق عند الساعة 2:00 ص",
+            priceRange: "1–50 د.م.",
+            location: "مراكش، المغرب (Marrakech)"
+        },
+        menuData: [
+            {
+                id: "tacos",
+                title: "Tacos",
+                titleAr: "طاكوس",
+                image: "public/tacos.jpg",
+                items: [
+                    { name: "Tacos Viande Hachée", nameAr: "طاكوس كفتة", price: 40, priceSmall: 25 },
+                    { name: "Tacos Saucisse", nameAr: "طاكوس صوصيص", price: 40, priceSmall: 25 },
+                    { name: "Tacos Poulet", nameAr: "طاكوس دجاج", price: 40, priceSmall: 25 },
+                    { name: "Tacos Shawarma", nameAr: "طاكوس شوارما", price: 40, priceSmall: 25 },
+                    { name: "Tacos Crispy", nameAr: "طاكوس كريسبي", price: 40, priceSmall: 25 },
+                    { name: "Tacos Nuggets", nameAr: "طاكوس نوكيت", price: 40, priceSmall: 25 },
+                    { name: "Tacos Mixte", nameAr: "طاكوس ميكست", price: 45, priceSmall: 30 },
+                    { name: "Tacos Cordon Bleu", nameAr: "طاكوس كوردون بلو", price: 45, priceSmall: 30 },
+                    { name: "Tacos Fruit De Mer", nameAr: "طاكوس فواكه البحر", price: 45, priceSmall: 30 },
+                    { name: "Tacos Achkid", nameAr: "طاكوس أشيد", price: 50, priceSmall: 35 }
+                ]
+            },
+            {
+                id: "pizza",
+                title: "Pizza",
+                titleAr: "بيتزا",
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000&auto=format&fit=crop",
+                items: [
+                    { name: "Pizza Margherita", nameAr: "بيتزا مارغاريتا", price: 25, priceSmall: 15 },
+                    { name: "Pizza Thon", nameAr: "بيتزا طون", price: 30, priceSmall: 20 },
+                    { name: "Pizza Végétarienne", nameAr: "بيتزا خضر", price: 25, priceSmall: 17 },
+                    { name: "Pizza Viande Hachée", nameAr: "بيتزا كفتة", price: 30, priceSmall: 20 },
+                    { name: "Pizza Dinde", nameAr: "بيتزا داند", price: 30, priceSmall: 20 },
+                    { name: "Pizza Shawarma", nameAr: "بيتزا شوارما", price: 30, priceSmall: 20 },
+                    { name: "Pizza 4 Fromages", nameAr: "بيتزا أربعة أجبان", price: 30, priceSmall: 20 },
+                    { name: "Pizza Charcuterie", nameAr: "بيتزا شاركوتري", price: 30, priceSmall: 20 },
+                    { name: "Pizza 4 Saisons", nameAr: "بيتزا أربعة فصول", price: 35, priceSmall: 25 },
+                    { name: "Pizza Fruit De Mer", nameAr: "بيتزا فواكه البحر", price: 35, priceSmall: 25 },
+                    { name: "Pizza Royale", nameAr: "بيتزا رويال", price: 40, priceSmall: 25 },
+                    { name: "Pizza Achkid", nameAr: "بيتزا أشيد", price: 45, priceSmall: 35 }
+                ]
+            },
+            {
+                id: "burger",
+                title: "Burger",
+                titleAr: "برغر",
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1000&auto=format&fit=crop",
+                items: [
+                    { name: "Burger Normal", nameAr: "برغر عادي", price: 18 },
+                    { name: "Cheese Burger", nameAr: "تشيز برغر", price: 20 },
+                    { name: "Double Cheese Burger", nameAr: "دوبل تشيز برغر", price: 30 },
+                    { name: "Chicken Burger", nameAr: "تشكن برغر", price: 25 },
+                    { name: "Burger Achkid", nameAr: "برغر أشيد", price: 35 }
+                ]
+            },
+            {
+                id: "calzone",
+                title: "Calzone",
+                titleAr: "كلزون",
+                image: "public/calzone.jpg",
+                items: [
+                    { name: "Calzone Viande Hachée", nameAr: "كلزون كفتة", price: 25 },
+                    { name: "Calzone Dinde", nameAr: "كلزون داند", price: 25 },
+                    { name: "Calzone Thon", nameAr: "كلزون طون", price: 25 },
+                    { name: "Calzone Mixte", nameAr: "كلزون ميكست", price: 30 },
+                    { name: "Calzone Royale", nameAr: "كلزون رويال", price: 35 }
+                ]
+            },
+            {
+                id: "gratin",
+                title: "Gratiné",
+                titleAr: "كراتيني",
+                image: "public/gratine.jpg",
+                items: [
+                    { name: "Gratiné Viande Hachée", nameAr: "كراتيني كفتة", price: 45 },
+                    { name: "Gratiné Poulet", nameAr: "كراتيني دجاج", price: 45 },
+                    { name: "Gratiné Mixte", nameAr: "كراتيني ميكست", price: 50 },
+                    { name: "Gratiné Achkid", nameAr: "كراتيني أشيد", price: 50 }
+                ]
+            },
+            {
+                id: "sandwich",
+                title: "Sandwich",
+                titleAr: "سندويش",
+                image: "public/sandwich.jpg",
+                items: [
+                    { name: "Sandwich Viande Hachée", nameAr: "سندويش كفتة", price: 17 },
+                    { name: "Sandwich Saucisse", nameAr: "سندويش صصوصيص", price: 17 },
+                    { name: "Sandwich Poulet", nameAr: "سندويش دجاج", price: 17 },
+                    { name: "Sandwich Thon", nameAr: "سندويش طون", price: 15 },
+                    { name: "Sandwich Mixte", nameAr: "سندويش ميكست", price: 20 },
+                    { name: "Sandwich Achkid", nameAr: "سندويش أشيد", price: 25 }
+                ]
+            },
+            {
+                id: "pasticcio",
+                title: "Pasticcio",
+                titleAr: "باستيشيو",
+                image: "public/pasticcio.jpg",
+                items: [
+                    { name: "Pasticcio Dinde Fumée", nameAr: "باستيشيو داند فومي", price: 25 },
+                    { name: "Pasticcio Viande Hachée", nameAr: "باستيشيو كفتة", price: 25 },
+                    { name: "Pasticcio Poulet", nameAr: "باستيشيو دجاج", price: 25 },
+                    { name: "Pasticcio Mixte", nameAr: "باستيشيو ميكست", price: 30 }
+                ]
+            },
+            {
+                id: "shawarma",
+                title: "Shawarma",
+                titleAr: "شوارما",
+                image: "public/shawarma.jpg",
+                items: [
+                    { name: "Shawarma Normal", nameAr: "شوارما عادية", price: 18 },
+                    { name: "Shawarma Frites", nameAr: "شوارما فريت", price: 20 },
+                    { name: "Shawarma Fromage", nameAr: "شوارما فرماج", price: 22 },
+                    { name: "Shawarma Plate", nameAr: "شوارما طبق", price: 30 }
+                ]
+            },
+            {
+                id: "panini",
+                title: "Panini",
+                titleAr: "بانيني",
+                image: "public/panini.jpg",
+                items: [
+                    { name: "Panini Fromage", nameAr: "بانيني فرماج", price: 10 },
+                    { name: "Panini Thon", nameAr: "بانيني طون", price: 15 },
+                    { name: "Panini Viande Hachée", nameAr: "بانيني كفتة", price: 18 },
+                    { name: "Panini Mixte", nameAr: "بانيني ميكست", price: 20 },
+                    { name: "Panini Achkid", nameAr: "بانيني أشيد", price: 25 }
+                ]
+            },
+            {
+                id: "bocadillos",
+                title: "Bocadillos",
+                titleAr: "بوكاديوس",
+                image: "public/bocadillos.jpg",
+                items: [
+                    { name: "Bocadillos Normal", nameAr: "بوكاديوس", price: 12 },
+                    { name: "Bocadillos Plat", nameAr: "بوكاديوس طبسيل", price: 15 }
+                ]
+            },
+            {
+                id: "tortilla",
+                title: "Tortilla",
+                titleAr: "طورطية",
+                image: "public/tortilla.jpg",
+                items: [
+                    { name: "Tortilla", nameAr: "طورطية", price: 10 },
+                    { name: "Tortilla Plat", nameAr: "طبق طورطية", price: 15 },
+                    { name: "Tortilla Viande Hachée", nameAr: "طورطية كفتة", price: 17 }
+                ]
+            },
+            {
+                id: "tajine",
+                title: "Tajine",
+                titleAr: "طاجين",
+                image: "public/tajine.jpg",
+                items: [
+                    { name: "Tajine Viande Hachée", nameAr: "طاجين كفتة", price: 20 },
+                    { name: "Tajine Poulet", nameAr: "طاجين دجاج", price: 20 },
+                    { name: "Tajine Fruit De Mer", nameAr: "طاجين فواكه البحر", price: 30 }
+                ]
+            },
+            {
+                id: "jus",
+                title: "Jus",
+                titleAr: "عصائر",
+                image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=1000&auto=format&fit=crop",
+                items: [
+                    { name: "Jus Orange", nameAr: "عصير الليمون", price: 12 },
+                    { name: "Jus Panaché", nameAr: "عصير بناشي", price: 15 },
+                    { name: "Jus Avocat", nameAr: "عصير أفوكا", price: 17 },
+                    { name: "Jus Za3za3", nameAr: "عصير زعزع", price: 35 }
+                ]
+            }
+        ],
+        init() {
+            setInterval(() => {
+                this.currentHero = (this.currentHero + 1) % this.heroImages.length;
+            }, 5000);
+            setTimeout(() => {
+                if (window.lucide) lucide.createIcons();
+            }, 100);
+        },
+        openWhatsApp(itemName) {
+            const message = itemName 
+                ? `مرحباً سناك أشيد، أريد طلب: ${itemName}`
+                : "مرحباً سناك أشيد، أريد الاستفسار عن القائمة";
+            window.open(`https://wa.me/${this.contactInfo.whatsapp}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    }
+}
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-neutral-50 selection:bg-orange-100 selection:text-orange-900" x-data="snackApp()">
+    
+    <!-- Hero Section -->
+    <header class="relative h-[50vh] md:h-[65vh] flex items-center justify-center overflow-hidden">
+        <template x-for="(img, index) in heroImages" :key="index">
+            <div x-show="currentHero === index" 
+                 x-transition:enter="transition ease-out duration-1000"
+                 x-transition:enter-start="opacity-0 scale-110"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-1000"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="absolute inset-0 z-0">
+                <img :src="img" alt="Snack Achkid" class="w-full h-full object-cover brightness-[0.4]">
+            </div>
+        </template>
+        
+        <div class="relative z-10 text-center px-4">
+            <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 100)" 
+                 x-show="show" x-transition:enter="transition ease-out duration-800" x-transition:enter-start="opacity-0 translate-y-8">
+                <h1 class="text-5xl md:text-8xl font-bold text-white mb-4 tracking-tight drop-shadow-2xl">
+                    Snack <span class="text-orange-500">Achkid</span>
+                </h1>
+                <p class="text-xl md:text-3xl text-neutral-200 max-w-3xl mx-auto drop-shadow-lg">
+                    أطيب المأكولات السريعة في مراكش - جودة ومذاق لا يقاوم
+                </p>
+            </div>
+            
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <button @click="openWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-all shadow-xl hover:scale-105 active:scale-95">
+                    <i data-lucide="message-circle"></i>
+                    اطلب عبر الواتساب
+                </button>
+                <a :href="'tel:' + contactInfo.phone" class="bg-white hover:bg-neutral-100 text-neutral-900 px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-all shadow-xl hover:scale-105 active:scale-95">
+                    <i data-lucide="phone"></i>
+                    اتصل بنا
+                </a>
+            </div>
+        </div>
+
+        <!-- Slider Indicators -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+            <template x-for="(img, index) in heroImages" :key="index">
+                <button @click="currentHero = index" 
+                        :class="currentHero === index ? 'w-12 bg-orange-500' : 'w-2 bg-white/50'"
+                        class="h-2 rounded-full transition-all duration-500"></button>
+            </template>
+        </div>
+    </header>
+
+    <!-- Info Bar -->
+    <section class="glass-card mx-4 -mt-12 relative z-20 rounded-3xl p-8 max-w-6xl md:mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 shadow-2xl border border-white/40">
+        <div class="flex items-center gap-5">
+            <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center shadow-inner">
+                <i data-lucide="clock" size="28"></i>
+            </div>
+            <div>
+                <p class="text-sm text-neutral-500 font-medium">ساعات العمل</p>
+                <p class="font-bold text-lg" x-text="contactInfo.hours"></p>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-5">
+            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-inner">
+                <i data-lucide="utensils" size="28"></i>
+            </div>
+            <div>
+                <p class="text-sm text-neutral-500 font-medium">نطاق السعر</p>
+                <p class="font-bold text-lg" x-text="contactInfo.priceRange"></p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-5">
+            <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center shadow-inner">
+                <i data-lucide="map-pin" size="28"></i>
+            </div>
+            <div>
+                <p class="text-sm text-neutral-500 font-medium">الموقع</p>
+                <p class="font-bold text-lg" x-text="contactInfo.location"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Grid -->
+    <main class="max-w-7xl mx-auto px-4 py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">قائمة الطعام</h2>
+            <div class="w-24 h-2 bg-orange-500 mx-auto rounded-full shadow-sm"></div>
+            <p class="mt-6 text-neutral-500 text-lg">اختر الفئة المفضلة لديك واستمتع بأشهى الأطباق</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <template x-for="(category, index) in menuData" :key="category.id">
+                <div @click="selectedCategory = category" 
+                     class="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-100">
+                    <div class="relative h-48 overflow-hidden">
+                        <img :src="category.image" :alt="category.title" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-2xl font-bold group-hover:text-orange-600 transition-colors" x-text="category.title"></h3>
+                            <span class="text-xs font-bold bg-orange-50 text-orange-600 px-3 py-1 rounded-full" x-text="category.items.length + ' أصناف'"></span>
+                        </div>
+                        <p class="text-neutral-500 mb-6" x-text="category.titleAr"></p>
+                        
+                        <div class="flex items-center text-orange-600 font-bold gap-2 group-hover:translate-x-[-4px] transition-all">
+                            <span>عرض القائمة</span>
+                            <i data-lucide="chevron-left" size="20"></i>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </main>
+
+    <!-- Category Modal -->
+    <div x-show="selectedCategory" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+        <div x-show="selectedCategory" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+             @click="selectedCategory = null" class="absolute inset-0 bg-neutral-900/80 backdrop-blur-md"></div>
+        
+        <div x-show="selectedCategory" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             class="relative w-full max-w-3xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            
+            <div class="relative h-40 sm:h-56">
+                <img :src="selectedCategory?.image" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/80"></div>
+                <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                    <h3 class="text-4xl sm:text-5xl font-bold text-white mb-2" x-text="selectedCategory?.title"></h3>
+                    <p class="text-orange-400 text-xl" x-text="selectedCategory?.titleAr"></p>
+                </div>
+                <button @click="selectedCategory = null" class="absolute top-6 right-6 p-3 bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition-all active:scale-90">
+                    <i data-lucide="x" size="24"></i>
+                </button>
+            </div>
+            
+            <div class="overflow-y-auto p-6 sm:p-8 space-y-5 flex-1 custom-scrollbar">
+                <template x-for="(item, idx) in selectedCategory?.items" :key="idx">
+                    <div class="flex items-center justify-between p-5 rounded-3xl bg-neutral-50 hover:bg-orange-50 transition-all group border border-neutral-100 hover:border-orange-200 shadow-sm hover:shadow-md">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-xl mb-1" x-text="item.name"></h4>
+                            <p class="text-neutral-500" x-text="item.nameAr"></p>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <div class="text-left">
+                                <p class="text-2xl font-bold text-orange-600"><span x-text="item.price"></span> <span class="text-sm">د.م.</span></p>
+                                <template x-if="item.priceSmall">
+                                    <p class="text-sm text-neutral-400">صغير: <span x-text="item.priceSmall"></span> د.م.</p>
+                                </template>
+                            </div>
+                            <button @click="openWhatsApp(item.nameAr)" class="p-4 bg-green-100 text-green-600 rounded-2xl hover:bg-green-600 hover:text-white transition-all shadow-sm active:scale-90">
+                                <i data-lucide="message-circle" size="24"></i>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            
+            <div class="p-8 bg-neutral-50 border-t border-neutral-100">
+                <button @click="openWhatsApp()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-5 rounded-3xl font-bold text-xl flex items-center justify-center gap-3 transition-all shadow-xl active:scale-[0.98]">
+                    <i data-lucide="shopping-cart" size="24"></i>
+                    <span>طلب القائمة كاملة</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-900 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-16">
+            <div class="text-center md:text-right">
+                <h2 class="text-4xl font-bold mb-8">Snack <span class="text-orange-500">Achkid</span></h2>
+                <p class="text-neutral-400 mb-10 leading-relaxed text-lg">
+                    نحن نفخر بتقديم أفضل الوجبات السريعة في مراكش. نستخدم أجود المكونات الطازجة لضمان مذاق رائع وجودة لا تضاهى في كل وجبة.
+                </p>
+                <div class="flex justify-center md:justify-start gap-5">
+                    <a href="#" class="w-12 h-12 bg-neutral-800 rounded-2xl flex items-center justify-center hover:bg-orange-500 transition-all hover:-translate-y-1 shadow-lg">
+                        <i data-lucide="instagram" size="24"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-neutral-800 rounded-2xl flex items-center justify-center hover:bg-orange-500 transition-all hover:-translate-y-1 shadow-lg">
+                        <i data-lucide="facebook" size="24"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center md:text-right">
+                <h4 class="text-2xl font-bold mb-8 border-b border-neutral-800 pb-4 inline-block">روابط سريعة</h4>
+                <ul class="space-y-5 text-neutral-400 text-lg">
+                    <li><a href="#" class="hover:text-orange-500 transition-colors">الرئيسية</a></li>
+                    <li><a href="#" class="hover:text-orange-500 transition-colors">قائمة الطعام</a></li>
+                    <li><a href="#" class="hover:text-orange-500 transition-colors">من نحن</a></li>
+                    <li><a href="#" target="_blank" class="hover:text-orange-500 transition-colors flex items-center justify-center md:justify-start gap-3">
+                        اطلب عبر Glovo <i data-lucide="external-link" size="18"></i>
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div class="text-center md:text-right">
+                <h4 class="text-2xl font-bold mb-8 border-b border-neutral-800 pb-4 inline-block">اتصل بنا</h4>
+                <div class="space-y-6">
+                    <div class="flex items-center justify-center md:justify-start gap-4 text-neutral-400 text-lg">
+                        <i data-lucide="phone" class="text-orange-500"></i>
+                        <span dir="ltr" class="font-bold" x-text="contactInfo.phone"></span>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4 text-neutral-400 text-lg">
+                        <i data-lucide="message-circle" class="text-orange-500"></i>
+                        <span>واتساب: <span x-text="contactInfo.phone"></span></span>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4 text-neutral-400 text-lg">
+                        <i data-lucide="map-pin" class="text-orange-500"></i>
+                        <span x-text="contactInfo.location"></span>
+                    </div>
+                    <button class="mt-6 w-full bg-neutral-800 hover:bg-neutral-700 py-4 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg text-lg">
+                        <i data-lucide="navigation" size="22"></i>
+                        عرض على الخريطة
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 mt-20 pt-10 border-t border-neutral-800 text-center text-neutral-500 text-sm">
+            <p>© <span x-text="new Date().getFullYear()"></span> سناك أشيد. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- External Script -->
+    <script src="script.js"></script>
+</body>
+</html>
